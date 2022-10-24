@@ -22,5 +22,7 @@ ec2_flavor_name: t3.large
 # Disk
 ec2_disk_size: 20
 ec2_ebs_name: /dev/sda1
+# Key Pair
+ec2_key_name: "Key Pair 2"
 # Instance
 ec2_instance_name: rhel-1

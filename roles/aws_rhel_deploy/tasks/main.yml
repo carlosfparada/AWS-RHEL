@@ -92,7 +92,7 @@
     instance_type: "{{ ec2_flavor_name }}"
     security_group: "{{ ec2_sg_name }}"
     name: "{{ ec2_instance_name }}"
-    key_name: "{{ ec2_vpc_name }}"
+    key_name: "{{ ec2_key_name }}"
     region: "{{ ec2_vpc_region }}"
     vpc_subnet_id: "{{ subnet.subnet.id }}"
     network:
