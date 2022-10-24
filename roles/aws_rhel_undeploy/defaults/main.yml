@@ -18,7 +18,7 @@ ec2_sg_openports:
 # AMI
 ec2_image_name: RHEL-8.6.0_HVM-*x86_64*
 # Flavour 
-ec2_flavor_name: t3.large
+ec2_flavor_name: t2.micro
 # Disk
 ec2_disk_size: 20
 ec2_ebs_name: /dev/sda1
