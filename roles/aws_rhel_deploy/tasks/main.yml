@@ -40,7 +40,7 @@
       - dest: 0.0.0.0/0
         gateway_id: "{{ igw.gateway_id }}"
 
-- name: Create Security Group {{ instance_name }} (HTTP, HTTPS and SSH)
+- name: Create Security Group
   amazon.aws.ec2_group:
     name: "{{ ec2_sg_name }}"
     description: Allow all on ports
@@ -53,7 +53,7 @@
     region: "{{ ec2_vpc_region }}"
     vpc_id: "{{ vpc.vpc.id }}"
     tags:
-      name: "{{ instance_name }}"
+      name: "{{ ec2_sg_name }}"
 
 # - name: check if ec2_key_pair is a file
 #   stat:
@@ -79,7 +79,7 @@
 #     - ec2_key_pair is defined
 #     - not ec2_key_pair_stat.stat.exists | bool
 
-- name: Get AMI with filter "{{ ec2_image_name }}"
+- name: Get AMI by Name
   amazon.aws.ec2_ami_info:
     filters:
       name: "{{ ec2_image_name }}"
@@ -87,11 +87,11 @@
   register: ami_find
   when: not ec2_ami_id
 
-- name: Create EC2 RHEL instance
+- name: Create RHEL instance
   amazon.aws.ec2_instance:
     image_id: "{{ ami_find.images[-1].image_id | default('') }}"
     instance_type: "{{ ec2_flavor_name }}"
-    security_group: "{{ ec2_instance_name }}"
+    security_group: "{{ ec2_sg_name }}"
     name: "{{ ec2_instance_name }}"
     key_name: "{{ ec2_vpc_name }}"
     region: "{{ ec2_vpc_region }}"
