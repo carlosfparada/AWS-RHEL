@@ -109,4 +109,4 @@
 
 - name: Print instance details
   ansible.builtin.debug:
-    msg: "Instance DNS name is: {{ ec2_instance.instances[0].public_dns_name }} with IP address {{ ec2.instances[0].public_ip_address }}"
+    msg: "Instance DNS name is: {{ ec2_instance.instances[0].public_dns_name }} with IP address {{ ec2_instance.instances[0].public_ip_address }}"
