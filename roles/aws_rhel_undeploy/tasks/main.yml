@@ -21,48 +21,6 @@
     state: running
   register: ec2_instance
 
-
-
-- name: Create VPC {{ ec2_vpc_name }}
-  amazon.aws.ec2_vpc_net:
-    name: "{{ ec2_vpc_name }}"
-    cidr_block: "{{ ec2_vpc_cidr }}"
-    region: "{{ ec2_vpc_region }}"
-    state: absent
-  register: vpc
-
-- name: Create Subnet in VPC
-  amazon.aws.ec2_vpc_subnet:
-    vpc_id: "{{ vpc.vpc.id }}"
-    cidr: "{{ ec2_subnet_cidr }}"
-    region: "{{ ec2_vpc_region }}"
-    state: absent
-    tags:
-      name: "{{ ec2_subnet_name }}"
-  register: subnet
-
-- name: Create Internet Gateway (IGW)
-  amazon.aws.ec2_vpc_igw:
-    vpc_id: "{{ vpc.vpc.id }}"
-    region: "{{ ec2_vpc_region }}"
-    state: absent
-    tags:
-      name: "{{ ec2_igw_name }}"
-  register: igw
-
-- name: Create Route Table and add IGW route
-  amazon.aws.ec2_vpc_route_table:
-    vpc_id: "{{ vpc.vpc.id }}"
-    region: "{{ ec2_vpc_region }}"
-    state: absent
-    tags:
-      name: "{{ ec2_rt_name }}"
-    subnets:
-      - "{{ subnet.subnet.id }}"
-    routes:
-      - dest: 0.0.0.0/0
-        gateway_id: "{{ igw.gateway_id }}"
-
 - name: Create Security Group
   amazon.aws.ec2_group:
     name: "{{ ec2_sg_name }}"
@@ -77,4 +35,44 @@
     vpc_id: "{{ vpc.vpc.id }}"
     tags:
       name: "{{ ec2_sg_name }}"
+
+- name: Create Route Table and add IGW route
+  amazon.aws.ec2_vpc_route_table:
+    vpc_id: "{{ vpc.vpc.id }}"
+    region: "{{ ec2_vpc_region }}"
+    state: absent
+    tags:
+      name: "{{ ec2_rt_name }}"
+    subnets:
+      - "{{ subnet.subnet.id }}"
+    routes:
+      - dest: 0.0.0.0/0
+        gateway_id: "{{ igw.gateway_id }}"
+
+- name: Create Internet Gateway (IGW)
+  amazon.aws.ec2_vpc_igw:
+    vpc_id: "{{ vpc.vpc.id }}"
+    region: "{{ ec2_vpc_region }}"
+    state: absent
+    tags:
+      name: "{{ ec2_igw_name }}"
+  register: igw
+
+- name: Delete Subnet in VPC
+  amazon.aws.ec2_vpc_subnet:
+    vpc_id: "{{ vpc.vpc.id }}"
+    cidr: "{{ ec2_subnet_cidr }}"
+    region: "{{ ec2_vpc_region }}"
+    state: absent
+    tags:
+      name: "{{ ec2_subnet_name }}"
+  register: subnet
+
+- name: Create VPC {{ ec2_vpc_name }}
+  amazon.aws.ec2_vpc_net:
+    name: "{{ ec2_vpc_name }}"
+    cidr_block: "{{ ec2_vpc_cidr }}"
+    region: "{{ ec2_vpc_region }}"
+    state: absent
+  register: vpc
 
