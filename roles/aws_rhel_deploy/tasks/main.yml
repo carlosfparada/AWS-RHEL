@@ -19,7 +19,7 @@
   register: subnet
 
 - name: Create Internet Gateway (IGW)
-  community.aws.ec2_vpc_igw:
+  amazon.aws.ec2_vpc_igw:
     vpc_id: "{{ vpc.vpc.id }}"
     region: "{{ ec2_vpc_region }}"
     state: present
@@ -27,8 +27,8 @@
       name: "{{ ec2_igw_name }}"
   register: igw
 
-- name: Create Route Table and attach IGW
-  community.aws.ec2_vpc_route_table:
+- name: Create Route Table and add IGW route
+  amazon.aws.ec2_vpc_route_table:
     vpc_id: "{{ vpc.vpc.id }}"
     region: "{{ ec2_vpc_region }}"
     state: present
@@ -88,7 +88,7 @@
   when: not ec2_ami_id
 
 - name: Create EC2 RHEL instance
-  community.aws.ec2_instance:
+  amazon.aws.ec2_instance:
     image_id: "{{ ami_find.images[-1].image_id | default('') }}"
     instance_type: "{{ ec2_flavor_name }}"
     security_group: "{{ ec2_instance_name }}"
@@ -106,7 +106,6 @@
           volume_size: "{{ ec2_disk_size | default(20, true) }}"
           delete_on_termination: true
     state: running
-  register: linux_vm
 
 - name: Print instance details
   ansible.builtin.debug:
