@@ -2,6 +2,6 @@
   hosts: localhost
   connection: local
   gather_facts: no
-  vars_files: 
   roles:
-    - deploy_rhel
+    - aws_rhel_deploy
+  
