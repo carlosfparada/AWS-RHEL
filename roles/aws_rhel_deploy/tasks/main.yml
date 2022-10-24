@@ -105,7 +105,8 @@
           volume_size: "{{ ec2_disk_size | default(20, true) }}"
           delete_on_termination: true
     state: running
+  register: ec2_instance
 
 - name: Print instance details
   ansible.builtin.debug:
-    msg: "Instance DNS name is: {{ ec2.instances[0].public_dns_name }} with IP address {{ ec2.instances[0].public_ip_address }}"
+    msg: "Instance DNS name is: {{ ec2_instance.instances[0].public_dns_name }} with IP address {{ ec2.instances[0].public_ip_address }}"
