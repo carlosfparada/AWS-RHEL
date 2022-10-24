@@ -85,7 +85,6 @@
       name: "{{ ec2_image_name }}"
     region: "{{ ec2_vpc_region }}"
   register: ami_find
-  when: not ec2_ami_id
 
 - name: Create RHEL instance
   amazon.aws.ec2_instance:
