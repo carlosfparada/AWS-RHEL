@@ -66,5 +66,6 @@
   amazon.aws.ec2_vpc_net:
     name: "{{ ec2_vpc_name }}"
     vpc_id: "{{ vpc.vpcs[0].id }}"
+    cidr_block: "{{ vpc.vpcs[0].cidr_block }}"
     state: absent
-
+    
