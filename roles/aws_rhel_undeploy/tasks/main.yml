@@ -17,6 +17,7 @@
 
 - name: Query Route Tables
   amazon.aws.ec2_vpc_route_table_info:
+    region: "{{ ec2_vpc_region }}"
     filters:
       "tag:Name": "{{ ec2_rt_name }}"
   register: rt
