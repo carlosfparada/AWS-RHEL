@@ -45,9 +45,6 @@
       name: "{{ ec2_subnet_name }}"
   when: vpc.vpcs | length > 0 and subnet.subnets | length > 0
 
-- ansible.builtin.debug:
-    var: rt
-
 - name: Delete Route Table and IGW route
   amazon.aws.ec2_vpc_route_table:
     vpc_id: "{{ vpc.vpcs[0].id }}"
@@ -68,4 +65,3 @@
     vpc_id: "{{ vpc.vpcs[0].id }}"
     cidr_block: "{{ vpc.vpcs[0].cidr_block }}"
     state: absent
-    
