@@ -62,11 +62,9 @@
     region: "{{ ec2_vpc_region }}"
     state: absent
 
-- name: Create VPC {{ ec2_vpc_name }}
+- name: Delete VPC
   amazon.aws.ec2_vpc_net:
     name: "{{ ec2_vpc_name }}"
     vpc_id: "{{ vpc.vpcs[0].id }}"
-    filters:
-      "tag:name": "{{ ec2_vpc_name }}"
     state: absent
 
