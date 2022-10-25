@@ -42,12 +42,12 @@
     state: absent
   when: vpc.vpcs | length > 0 and subnet.subnets | length > 0
 
-- name: Disassociate IGW from Route Table
-  amazon.aws.ec2_vpc_route_table:
-    vpc_id: "{{ vpc.vpcs[0].id }}"
-    route_table_id: "{{ rtb.route_tables[0].id }}"
-    gateway_id: None
-  when: vpc.vpcs | length > 0 and rtb.route_tables | length > 0
+# - name: Disassociate IGW from Route Table
+#   amazon.aws.ec2_vpc_route_table:
+#     vpc_id: "{{ vpc.vpcs[0].id }}"
+#     route_table_id: "{{ rtb.route_tables[0].id }}"
+#     gateway_id: None
+#   when: vpc.vpcs | length > 0 and rtb.route_tables | length > 0
 
 - name: Delete Route Table
   amazon.aws.ec2_vpc_route_table:
