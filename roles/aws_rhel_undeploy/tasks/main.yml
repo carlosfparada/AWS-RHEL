@@ -26,11 +26,12 @@
     var: vpc.vpcs[0]
 
 - debug: 
-    var: vpc.vpcs[0].id
+    var: vpc.vpcs[0].vpc_id
 
 - name: Delete Subnet in VPC
   amazon.aws.ec2_vpc_subnet:
-    vpc_id: "{{ vpc.vpcs[0].vpc_id }}"
+    vpc_id: "{{ vpc.vpcs[0].id }}"
+    cidr: "{{ ec2_subnet_cidr }}"
     region: "{{ ec2_vpc_region }}"
     state: absent
     filters:
@@ -38,7 +39,7 @@
 
 - name: Delete Route Table and add IGW route
   amazon.aws.ec2_vpc_route_table:
-    vpc_id: "{{ vpc.vpcs[0].vpc_id }}"
+    vpc_id: "{{ vpc.vpcs[0].id }}"
     region: "{{ ec2_vpc_region }}"
     state: absent
     filters:
@@ -46,7 +47,7 @@
 
 - name: Delete Internet Gateway (IGW)
   amazon.aws.ec2_vpc_igw:
-    vpc_id: "{{ vpc.vpcs[0].vpc_id }}"
+    vpc_id: "{{ vpc.vpcs[0].id }}"
     region: "{{ ec2_vpc_region }}"
     state: absent
     filters:
@@ -55,7 +56,7 @@
 - name: Create VPC {{ ec2_vpc_name }}
   amazon.aws.ec2_vpc_net:
     name: "{{ ec2_vpc_name }}"
-    vpc_id: "{{ vpc.vpcs[0].vpc_id }}"
+    vpc_id: "{{ vpc.vpcs[0].id }}"
     filters:
       "tag:name": "{{ ec2_vpc_name }}"
     state: absent
