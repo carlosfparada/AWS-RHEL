@@ -1,11 +1,5 @@
 ---
 
-- amazon.aws.ec2_vpc_net_info:
-    region: "{{ ec2_vpc_region }}"
-    filters:
-      "tag:name": "{{ ec2_vpc_name }}"
-  register: vpc
-      
 - name: Terminate RHEL instance
   amazon.aws.ec2_instance:
     state: absent
@@ -19,23 +13,30 @@
     region: "{{ ec2_vpc_region }}"
     state: absent
 
-- debug: 
-    var: vpc
+- amazon.aws.ec2_vpc_net_info:
+    region: "{{ ec2_vpc_region }}"
+    filters:
+      "tag:name": "{{ ec2_vpc_name }}"
+  register: vpc
 
-- debug: 
-    var: vpc.vpcs[0]
+- amazon.aws.ec2_subnet_info:
+    region: "{{ ec2_vpc_region }}"
+    vpc_id: "{{ vpc.vpcs[0].id }}"
+    filters:
+      "tag:name": "{{ ec2_subnet_name }}"
+  register: subnet
 
-- debug: 
-    var: vpc.vpcs[0].vpc_id
+- debug:
+    var: subnet
 
 - name: Delete Subnet in VPC
   amazon.aws.ec2_vpc_subnet:
     vpc_id: "{{ vpc.vpcs[0].id }}"
-    cidr: "{{ ec2_subnet_cidr }}"
+    cidr: "{{ subnet.subnets[0].cidr }}"
     region: "{{ ec2_vpc_region }}"
     state: absent
-    filters:
-      "tag:name": "{{ ec2_subnet_name }}"
+    tags:
+      name: "{{ ec2_subnet_name }}"
 
 - name: Delete Route Table and add IGW route
   amazon.aws.ec2_vpc_route_table:
