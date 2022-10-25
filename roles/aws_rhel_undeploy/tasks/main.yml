@@ -57,16 +57,16 @@
     state: absent
   when: vpc.vpcs | length > 0 and rtb.route_tables | length > 0
 
-- name: Delete VPC
-  amazon.aws.ec2_vpc_net:
-    name: "{{ ec2_vpc_name }}"
-    region: "{{ ec2_vpc_region }}"
-    cidr_block: "{{ vpc.vpcs[0].cidr_block }}"
-    state: absent
-
 - name: Delete Internet Gateway (IGW)
   amazon.aws.ec2_vpc_igw:
     vpc_id: "{{ vpc.vpcs[0].id }}"
     region: "{{ ec2_vpc_region }}"
     state: absent
   when: vpc.vpcs | length > 0
+
+- name: Delete VPC
+  amazon.aws.ec2_vpc_net:
+    name: "{{ ec2_vpc_name }}"
+    region: "{{ ec2_vpc_region }}"
+    cidr_block: "{{ vpc.vpcs[0].cidr_block }}"
+    state: absent
