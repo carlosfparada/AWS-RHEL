@@ -49,6 +49,13 @@
 #     gateway_id: None
 #   when: vpc.vpcs | length > 0 and rtb.route_tables | length > 0
 
+- name: Delete Internet Gateway (IGW)
+  amazon.aws.ec2_vpc_igw:
+    vpc_id: "{{ vpc.vpcs[0].id }}"
+    region: "{{ ec2_vpc_region }}"
+    state: absent
+  when: vpc.vpcs | length > 0
+
 - name: Delete Route Table
   amazon.aws.ec2_vpc_route_table:
     vpc_id: "{{ vpc.vpcs[0].id }}"
@@ -56,13 +63,6 @@
     route_table_id: "{{ rtb.route_tables[0].id }}"
     state: absent
   when: vpc.vpcs | length > 0 and rtb.route_tables | length > 0
-
-- name: Delete Internet Gateway (IGW)
-  amazon.aws.ec2_vpc_igw:
-    vpc_id: "{{ vpc.vpcs[0].id }}"
-    region: "{{ ec2_vpc_region }}"
-    state: absent
-  when: vpc.vpcs | length > 0
 
 - name: Delete VPC
   amazon.aws.ec2_vpc_net:
