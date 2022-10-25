@@ -22,7 +22,7 @@
 - amazon.aws.ec2_vpc_subnet_info:
     region: "{{ ec2_vpc_region }}"
     filters:
-      vpc_id: "{{ vpc.vpcs[0].id }}"
+      vpc-id: "{{ vpc.vpcs[0].id }}"
       "tag:name": "{{ ec2_subnet_name }}"
   register: subnet
 
