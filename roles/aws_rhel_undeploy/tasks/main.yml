@@ -62,5 +62,6 @@
 - name: Delete VPC
   amazon.aws.ec2_vpc_net:
     name: "{{ ec2_vpc_name }}"
+    region: "{{ ec2_vpc_region }}"
     cidr_block: "{{ vpc.vpcs[0].cidr_block }}"
     state: absent
