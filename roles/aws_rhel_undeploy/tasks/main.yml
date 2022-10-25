@@ -43,13 +43,18 @@
     state: absent
     tags:
       name: "{{ ec2_subnet_name }}"
+  when: subnet.subnets | length > 0
+
+- ansible.builtin.debug:
+    var: rt
 
 - name: Delete Route Table and add IGW route
   amazon.aws.ec2_vpc_route_table:
     vpc_id: "{{ vpc.vpcs[0].id }}"
     region: "{{ ec2_vpc_region }}"
-    route_table_id: 
+    route_table_id: "{{ rt.route_tables[0].id }}"
     state: absent
+  when: rt.route_tables | length > 0
 
 - name: Delete Internet Gateway (IGW)
   amazon.aws.ec2_vpc_igw:
