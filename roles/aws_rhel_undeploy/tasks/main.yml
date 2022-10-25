@@ -1,5 +1,10 @@
 ---
 
+- amazon.aws.ec2_vpc_subnet_info:
+    filters:
+      "tag:name": "{{ ec2_vpc_name }}"
+  register: vpc
+      
 - name: Terminate RHEL instance
   amazon.aws.ec2_instance:
     state: absent
