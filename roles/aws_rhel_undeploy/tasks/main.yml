@@ -47,8 +47,8 @@
     vpc_id: "{{ vpc.vpcs[0].id }}"
     region: "{{ ec2_vpc_region }}"
     route_table_id: "{{ rtb.route_tables[0].id }}"
-    state: absent
     lookup: id
+    state: absent
   when: vpc.vpcs | length > 0 and rtb.route_tables | length > 0
 
 - name: Delete Internet Gateway (IGW)
