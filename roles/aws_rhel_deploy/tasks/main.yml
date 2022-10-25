@@ -6,6 +6,8 @@
     cidr_block: "{{ ec2_vpc_cidr }}"
     region: "{{ ec2_vpc_region }}"
     state: present
+    tags:
+      name: "{{ ec2_vpc_name }}"
   register: vpc
 
 - name: Create Subnet in VPC
