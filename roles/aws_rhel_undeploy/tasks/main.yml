@@ -1,6 +1,6 @@
 ---
 
-- amazon.aws.ec2_vpc_subnet_info:
+- amazon.aws.ec2_vpc_info:
     region: "{{ ec2_vpc_region }}"
     filters:
       "tag:name": "{{ ec2_vpc_name }}"
@@ -35,11 +35,6 @@
     state: absent
     tags:
       name: "{{ ec2_rt_name }}"
-    subnets:
-      - "{{ subnet.subnet.id }}"
-    routes:
-      - dest: 0.0.0.0/0
-        gateway_id: "{{ igw.gateway_id }}"
 
 - name: Delete Internet Gateway (IGW)
   amazon.aws.ec2_vpc_igw:
