@@ -20,7 +20,13 @@
     state: absent
 
 - debug: 
+    var: vpc
+
+- debug: 
     var: vpc.vpcs[0]
+
+- debug: 
+    var: vpc.vpcs[0].vpc_id
 
 - name: Delete Subnet in VPC
   amazon.aws.ec2_vpc_subnet:
