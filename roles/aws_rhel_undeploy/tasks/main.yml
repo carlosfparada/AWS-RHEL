@@ -20,7 +20,7 @@
     region: "{{ ec2_vpc_region }}"
     filters:
       "tag:name": "{{ ec2_rt_name }}"
-  register: rt
+  register: rtb
 
 - name: Terminate RHEL instance
   amazon.aws.ec2_instance:
@@ -48,21 +48,19 @@
 - ansible.builtin.debug:
     var: rt
 
-- name: Delete Route Table and add IGW route
+- name: Delete Route Table and IGW route
   amazon.aws.ec2_vpc_route_table:
     vpc_id: "{{ vpc.vpcs[0].id }}"
     region: "{{ ec2_vpc_region }}"
-    route_table_id: "{{ rt.route_tables[0].id }}"
+    route_table_id: "{{ rtb.route_tables[0].id }}"
     state: absent
-  when: rt.route_tables | length > 0
+  when: rtb.route_tables | length > 0
 
 - name: Delete Internet Gateway (IGW)
   amazon.aws.ec2_vpc_igw:
     vpc_id: "{{ vpc.vpcs[0].id }}"
     region: "{{ ec2_vpc_region }}"
     state: absent
-    filters:
-      "tag:name": "{{ ec2_igw_name }}"
 
 - name: Create VPC {{ ec2_vpc_name }}
   amazon.aws.ec2_vpc_net:

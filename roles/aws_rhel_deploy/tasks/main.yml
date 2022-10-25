@@ -29,7 +29,7 @@
       name: "{{ ec2_igw_name }}"
   register: igw
 
-- name: Create Route Table and add IGW route
+- name: Create Route Table and IGW route
   amazon.aws.ec2_vpc_route_table:
     vpc_id: "{{ vpc.vpc.id }}"
     region: "{{ ec2_vpc_region }}"
