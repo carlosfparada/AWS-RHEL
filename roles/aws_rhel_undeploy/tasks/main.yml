@@ -41,8 +41,6 @@
     cidr: "{{ subnet.subnets[0].cidr_block }}"
     region: "{{ ec2_vpc_region }}"
     state: absent
-    tags:
-      name: "{{ ec2_subnet_name }}"
   when: vpc.vpcs | length > 0 and subnet.subnets | length > 0
 
 - name: Delete Route Table and IGW route
@@ -51,13 +49,14 @@
     region: "{{ ec2_vpc_region }}"
     route_table_id: "{{ rtb.route_tables[0].id }}"
     state: absent
-  when: rtb.route_tables | length > 0
+  when: vpc.vpcs | length > 0 and rtb.route_tables | length > 0
 
 - name: Delete Internet Gateway (IGW)
   amazon.aws.ec2_vpc_igw:
     vpc_id: "{{ vpc.vpcs[0].id }}"
     region: "{{ ec2_vpc_region }}"
     state: absent
+  when: vpc.vpcs | length > 0
 
 - name: Delete VPC
   amazon.aws.ec2_vpc_net:
