@@ -43,7 +43,7 @@
     state: absent
     tags:
       name: "{{ ec2_subnet_name }}"
-  when: vpc.vpc | length > 0 and subnet.subnets | length > 0
+  when: vpc.vpcs | length > 0 and subnet.subnets | length > 0
 
 - ansible.builtin.debug:
     var: rt
