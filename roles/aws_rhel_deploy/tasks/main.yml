@@ -12,7 +12,6 @@
 
 - name: Create Subnet in VPC
   amazon.aws.ec2_vpc_subnet:
-    name: "{{ ec2_subnet_name }}"
     vpc_id: "{{ vpc.vpc.id }}"
     cidr: "{{ ec2_subnet_cidr }}"
     region: "{{ ec2_vpc_region }}"
@@ -23,7 +22,6 @@
 
 - name: Create Internet Gateway (IGW)
   amazon.aws.ec2_vpc_igw:
-    name: "{{ ec2_igw_name }}"
     vpc_id: "{{ vpc.vpc.id }}"
     region: "{{ ec2_vpc_region }}"
     state: present
@@ -33,7 +31,6 @@
 
 - name: Create Route Table and IGW route
   amazon.aws.ec2_vpc_route_table:
-    name: "{{ ec2_rt_name }}"
     vpc_id: "{{ vpc.vpc.id }}"
     region: "{{ ec2_vpc_region }}"
     state: present
