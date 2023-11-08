@@ -47,7 +47,11 @@
     name: "{{ ec2_sg_name }}"
     description: Allow all on ports
     state: present
-    rules: "{{ ec2_sg_rules }}"
+    rules:
+      - proto: tcp
+        ports: "{{ ec2_sg_openports }}"
+        cidr_ip: 0.0.0.0/0
+        rule_desc: Allow all on ports
     region: "{{ ec2_vpc_region }}"
     vpc_id: "{{ vpc.vpc.id }}"
     tags:
