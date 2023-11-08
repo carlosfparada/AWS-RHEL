@@ -52,6 +52,9 @@
         ports: "{{ ec2_sg_openports }}"
         cidr_ip: 0.0.0.0/0
         rule_desc: Allow all on ports
+      - proto: icmp
+        cidr_ip: 0.0.0.0/0
+        rule_desc: Allow all ICMP
     region: "{{ ec2_vpc_region }}"
     vpc_id: "{{ vpc.vpc.id }}"
     tags:
