@@ -1,5 +1,4 @@
 ---
-
 - name: Create VPC {{ ec2_vpc_name }}
   amazon.aws.ec2_vpc_net:
     name: "{{ ec2_vpc_name }}"
@@ -39,7 +38,7 @@
     subnets:
       - "{{ subnet.subnet.id }}"
     routes:
-      - dest: 0.0.0.0/0
+      - dest: "0.0.0.0/0"
         gateway_id: "{{ igw.gateway_id }}"
 
 - name: Create Security Group
@@ -50,7 +49,7 @@
     rules:
       - proto: tcp
         ports: "{{ ec2_sg_openports }}"
-        cidr_ip: 0.0.0.0/0
+        cidr_ip: "0.0.0.0/0"
         rule_desc: Allow all on ports
     region: "{{ ec2_vpc_region }}"
     vpc_id: "{{ vpc.vpc.id }}"

@@ -1,5 +1,4 @@
 ---
-
 - name: Include vault quay.io credentials
   ansible.builtin.include_vars: ../vaults/rh_subs-vault.yml
 
@@ -18,14 +17,14 @@
     packages:
       - firewalld
       - httpd
-      - php 
+      - php
       - php-common
-  become: yes
+  become: true
 
 - name: Open port TCP 80
   ansible.posix.firewalld:
     port: http/tcp
-    permanent: yes
+    permanent: true
     state: enabled
   become: true
 
@@ -35,19 +34,18 @@
     dest: /var/www/html/index.html
     owner: apache
     mode: "0644"
-  become: yes
+  become: true
 
 - name: Start firewalld
   ansible.builtin.service:
     name: firewalld
-    enabled: yes
+    enabled: true
     state: restarted
   become: true
 
-- name: Restart httpd server 
-  ansible.builtin.service: 
+- name: Restart httpd server
+  ansible.builtin.service:
     name: httpd
-    enabled: yes
+    enabled: true
     state: restarted
-  become: yes
- 
+  become: true
