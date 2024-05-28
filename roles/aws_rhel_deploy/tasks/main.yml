@@ -44,16 +44,12 @@
 
 - name: Create Security Group
   amazon.aws.ec2_group:
-    name: "{{ ec2_sg_name }}"
     description: Allow all on ports
-    state: present
-    rules:
-      - proto: tcp
-        ports: "{{ ec2_sg_openports }}"
-        cidr_ip: 0.0.0.0/0
-        rule_desc: Allow all on ports
+    name: "{{ ec2_sg_name }}"
+    rules: "{{ ec2_sg_rules }}"
     region: "{{ ec2_vpc_region }}"
     vpc_id: "{{ vpc.vpc.id }}"
+    state: present
     tags:
       name: "{{ ec2_sg_name }}"
 
