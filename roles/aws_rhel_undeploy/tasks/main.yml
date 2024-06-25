@@ -29,7 +29,7 @@
       "tag:name": "{{ ec2_instance_name }}"
 
 - name: Delete Security Group
-  amazon.aws.ec2_group:
+  amazon.aws.ec2_security_group:
     name: "{{ ec2_sg_name }}"
     region: "{{ ec2_vpc_region }}"
     state: absent
