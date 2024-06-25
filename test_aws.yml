@@ -9,7 +9,7 @@
     instance_type: t2.micro
     image: ami-0477b9335a5a75438
     vpc_cidr: 10.0.0.0/16
-    subnet_cidr: 10.0.1.16/24
+    subnet_cidr: 10.0.1.0/24
     sg_name: ansible-sg
     sg_description: Ansible security group
     sg_rules:
@@ -91,3 +91,57 @@
         host: "{{ _host_ }}"
         port: 22
         delay: 60
+
+- name: Install rhel web server
+  hosts: "{{ instance_name }}"
+  vars:
+    users:
+      - john
+      - david
+      - phil
+  tasks:
+    - name: create user carlos
+      ansible.builtin.user:
+        name: carlos
+        shell: /bin/bash
+        createhome: true
+        home: /home/ano-user
+        state: present
+    - name: create group redhat
+      ansible.builtin.group:
+        name: redhat
+        state: present
+    - name: add carlos to redhat
+      ansible.builtin.user:
+        name: carlos
+        groups: redhat
+        append: true
+    - name: create users
+      ansible.builtin.user:
+        name: "{{ item }}"
+        shell: /bin/bash
+        createhome: true
+        home: /home/{{ item }}
+        state: present
+      loop: "{{ users |flatten(levels=1) }}"
+    # install httpd & start service & open http and https ports
+    - name: Install httpd
+      ansible.builtin.package:
+        name: httpd
+        state: present
+
+    - name: Start service
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: true
+
+    - name: Open http and https ports
+      ansible.posix.firewalld:
+        port: '{{ item }}/tcp'
+        permanent: true
+        state: enabled
+      loop:
+        - 80
+        - 443
+
