@@ -19,9 +19,11 @@ ec2_sg_rules:
       - 22
     cidr_ip: 0.0.0.0/0
     rule_desc: Allow all on ports
-  # - proto: icmp
-  #   cidr_ip: 0.0.0.0/0
-  #   rule_desc: Allow all ICMP
+  - proto: icmp
+    from_port: 8 # icmp type, -1 = any type
+    to_port:  -1 # icmp subtype, -1 = any subtype
+    cidr_ip: 0.0.0.0/0
+    rule_desc: Allow all ICMP
 # AMI
 ec2_image_name: RHEL-8.6.0_HVM-*x86_64*
 # Flavour 
