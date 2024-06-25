@@ -71,7 +71,7 @@
           Name: "{{ sg_name }}"
       register: sg
     - name: Create an EC2 instance
-      amazon.aws.ec2:
+      amazon.aws.ec2_instance:
         key_name: "{{ _key_name_ }}"
         instance_type: "{{ instance_type }}"
         image: "{{ image }}"
