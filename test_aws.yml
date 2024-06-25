@@ -8,7 +8,7 @@
     keypair: ansible-key
     instance_type: t2.micro
     image: ami-0477b9335a5a75438
-    vpc_cidr: 10.0.0.60/16
+    vpc_cidr: 10.0.0.0/16
     subnet_cidr: 10.0.1.16/24
     sg_name: ansible-sg
     sg_description: Ansible security group
