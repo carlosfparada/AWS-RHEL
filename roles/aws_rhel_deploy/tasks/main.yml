@@ -93,7 +93,7 @@
     key_name: "{{ ec2_key_name }}"
     region: "{{ ec2_vpc_region }}"
     vpc_subnet_id: "{{ subnet.subnet.id }}"
-    network_interfaces:
+    network:
       assign_public_ip: true
     tags:
       name: "{{ ec2_instance_name }}"
