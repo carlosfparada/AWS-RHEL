@@ -32,6 +32,6 @@ ec2_flavor_name: t2.micro
 ec2_disk_size: 20
 ec2_ebs_name: /dev/sda1
 # Key Pair
-ec2_key_name: "KeyPair"
+ec2_key_name: "KeyPair-Virginia"
 # Instance
 ec2_instance_name: rhel-1
