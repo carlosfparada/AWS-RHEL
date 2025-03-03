@@ -6,7 +6,7 @@
 - name: Attach Red Hat subscription
   community.general.redhat_subscription:
     state: present
-    username: rh-ee-cparada
+    username: "{{ subscription_user }}"
     password: "{{ subscription_pass }}"
     pool_ids: "{{ rh_subs_pool_id }}"
 
@@ -51,3 +51,9 @@
     state: restarted
   become: yes
  
+ - name: Dettach Red Hat subscription
+   community.general.redhat_subscription:
+    state: absent
+    username: "{{ subscription_user }}"
+    password: "{{ subscription_pass }}"
+    pool_ids: "{{ rh_subs_pool_id }}"
