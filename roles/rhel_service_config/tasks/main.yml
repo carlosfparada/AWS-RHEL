@@ -51,8 +51,8 @@
     state: restarted
   become: yes
  
- - name: Dettach Red Hat subscription
-   community.general.redhat_subscription:
+- name: Dettach Red Hat subscription
+  community.general.redhat_subscription:
     state: absent
     username: "{{ subscription_user }}"
     password: "{{ subscription_pass }}"
