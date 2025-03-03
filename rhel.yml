@@ -1,7 +1,14 @@
-- name: AWS RHEL deployment roles
+- name: Get dynamic Fortinet nodes and assign them to groups
   hosts: all
   connection: local
   gather_facts: no
   roles:
     - utils_hosts_aws
+
+
+- name: AWS RHEL config
+  hosts: rhel
+  connection: local
+  gather_facts: no
+  roles:
     - rhel_service_config
