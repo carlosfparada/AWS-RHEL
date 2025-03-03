@@ -3,4 +3,5 @@
   connection: local
   gather_facts: no
   roles:
+    - utils_hosts_aws
     - rhel_service_config
