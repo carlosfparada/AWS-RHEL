@@ -28,7 +28,7 @@ ec2_sg_rules:
 #ec2_image_name: RHEL-8.6.0_HVM-*x86_64*
 ec2_image_name: RHEL-9.5_HVM*
 # Flavour 
-ec2_flavor_name: t2.micro
+ec2_flavor_name: t2.large
 # Disk
 ec2_disk_size: 20
 ec2_ebs_name: /dev/sda1
